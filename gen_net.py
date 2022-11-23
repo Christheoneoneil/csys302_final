@@ -55,6 +55,11 @@ def stats(network: nx.DiGraph) -> None:
     plt.yscale("log")
     plt.savefig("degree_hist")
     
+    density = nx.density(network)
+    print("Network density:", density)
+
+    pears_corr = nx.degree_assortativity_coefficient(network)
+    print("Avg Pearosn Corr Coeff", pears_corr)
 
 net = gen_net("VT_Road_Centerline.geojson",  ["StartNodeID", "EndNodeID"], 
                 "edge_list.csv")
