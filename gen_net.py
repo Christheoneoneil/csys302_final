@@ -24,11 +24,13 @@ def gen_net(file_name: str, node_vals, out_file_name) -> nx.DiGraph:
     
     if list_diff == [out_file_name]: 
         roads = geopandas.read_file(file_name)
-        roads = roads[node_vals] 
-        roads.to_csv(out_file_name)
+        roads = roads[node_vals]
+        roads.rename(columns={node_vals[0]: "Source", 
+                        node_vals[1]: "Target"}, inplace=True)
+        roads.to_csv(out_file_name, index=False)
         
     roads = pd.read_csv(out_file_name)
-    G = nx.from_pandas_edgelist(roads, node_vals[0], node_vals[1], 
+    G = nx.from_pandas_edgelist(roads, source="Source", target="Target", 
                                 create_using=nx.DiGraph())
     return G
 
