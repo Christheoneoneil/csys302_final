@@ -1,11 +1,13 @@
 import geopandas
 import pandas as pd
 import matplotlib.pyplot as plt
-import momepy
+import collections
+import numpy as np
 import networkx as nx
 import os
+import seaborn as sns
 
-def gen_net(file_name: str, node_vals, out_file_name) -> nx.Graph:
+def gen_net(file_name: str, node_vals, out_file_name) -> nx.DiGraph:
     """
     gen_net takes in a file and returns a network x network
     
@@ -26,8 +28,34 @@ def gen_net(file_name: str, node_vals, out_file_name) -> nx.Graph:
         roads.to_csv(out_file_name)
         
     roads = pd.read_csv(out_file_name)
-    G = nx.from_pandas_edgelist(roads, node_vals[0], node_vals[1], create_using=nx.DiGraph())
+    G = nx.from_pandas_edgelist(roads, node_vals[0], node_vals[1], 
+                                create_using=nx.DiGraph())
     return G
 
-net = gen_net("VT_Road_Centerline.geojson",  ["StartNodeID", "EndNodeID"], "edge_list.csv")
-print(net)
+def stats(network: nx.DiGraph) -> None:
+    """
+    stats takes in a network file and gathers basic network
+    stats to inform out models
+    
+    Params:
+    network: given network object
+
+    Returns: 
+    None
+    """
+    degree_sequence = sorted([d for n, d in network.degree()], 
+                            reverse=True)
+    degcounts = collections.Counter(degree_sequence)
+    deg, cnt = zip(*degcounts.items())
+    plt.bar(deg, cnt, color='green')
+    plt.xlabel("Degree")
+    plt.ylabel("Log Counts")
+    plt.title("Degree Distribution")
+    sns.despine()
+    plt.yscale("log")
+    plt.savefig("degree_hist")
+    
+
+net = gen_net("VT_Road_Centerline.geojson",  ["StartNodeID", "EndNodeID"], 
+                "edge_list.csv")
+stats(net)
