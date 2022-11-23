@@ -35,12 +35,12 @@ def gen_net(file_name: str, node_vals, out_file_name) -> nx.DiGraph:
 def stats(network: nx.DiGraph) -> None:
     """
     stats takes in a network file and gathers basic network
-    stats to inform out models
+    stats to inform our models
     
     Params:
     network: given network object
 
-    Returns: 
+    Returns:
     None
     """
     degree_sequence = sorted([d for n, d in network.degree()], 
