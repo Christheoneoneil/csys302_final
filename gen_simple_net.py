@@ -2,7 +2,6 @@ import geopandas
 import pandas as pd
 import matplotlib.pyplot as plt
 import collections
-import numpy as np
 import networkx as nx
 import os
 import seaborn as sns
@@ -31,10 +30,10 @@ def gen_net(file_name: str, node_vals, out_file_name) -> nx.DiGraph:
         
     roads = pd.read_csv(out_file_name)
     G = nx.from_pandas_edgelist(roads, source="Source", target="Target", 
-                                create_using=nx.DiGraph())
+                                create_using=nx.Graph())
     return G
 
-def stats(network: nx.DiGraph) -> None:
+def stats(network: nx.Graph) -> None:
     """
     stats takes in a network file and gathers basic network
     stats to inform our models
@@ -45,6 +44,7 @@ def stats(network: nx.DiGraph) -> None:
     Returns:
     None
     """
+    print(network)
     degree_sequence = sorted([d for n, d in network.degree()], 
                             reverse=True)
     degcounts = collections.Counter(degree_sequence)
