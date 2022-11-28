@@ -6,7 +6,7 @@ import networkx as nx
 import os
 import seaborn as sns
 
-def gen_net(file_name: str, node_vals, out_file_name) -> nx.DiGraph:
+def gen_net(file_name: str, node_vals, out_file_name) -> nx.Graph:
     """
     gen_net takes in a file and returns a network x network
     
@@ -64,5 +64,5 @@ def stats(network: nx.Graph) -> None:
     print("Avg Pearosn Corr Coeff", pears_corr)
 
 net = gen_net("VT_Road_Centerline.geojson",  ["StartNodeID", "EndNodeID"], 
-                "edge_list.csv")
+                "edge_simple_list.csv")
 stats(net)
