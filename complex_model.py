@@ -9,9 +9,7 @@ import osmnx as ox
 import pandas as pd
 import seaborn as sns
 import mapclassify
-
 from gen_complex_net import gen_net
-
 
 
 def gen_visuals(streets) -> None:
