@@ -2,49 +2,39 @@ import geopandas
 import pandas as pd
 import matplotlib.pyplot as plt
 import networkx as nx
-import os
+import osmnx as ox
 
-def gen_net(file_name: str, node_vals, out_file_name, classes) -> nx.Graph:
+
+def gen_net()-> None:
+
     """
-    gen_net takes in a file and returns a network x network
-    
-    Params:
-    file_name: name of geodata file
-    node_vals: list of feature names that contain node info
-    out_file_name: name of subset file 
 
-    Returns: 
-    graph of given data
+    gen_net gathers network data for Chittendan County
+
+    Params: 
+    None
+
+    Retuns:
+    Pandas csv of network data
     """
-    list_dir = os.listdir()
-    list_diff = list(set([out_file_name])-set(list_dir))
-    
-    if list_diff == [out_file_name]: 
-        roads = geopandas.read_file(file_name)
-        roads = roads[node_vals]
-        roads["Weights"] = roads[node_vals[-1]].apply(lambda row: 1 if (row in classes) else 2)
-        print(roads["Weights"])
-        roads.rename(columns={node_vals[0]: "Source", 
-                        node_vals[1]: "Target"}, inplace=True)
-        roads.to_csv(out_file_name, index=False)
-        
-    roads = pd.read_csv(out_file_name)
-    G = nx.from_pandas_edgelist(roads, source="Source", target="Target", 
-                                 edge_attr=["Weights"], create_using=nx.Graph())
-    return G
+    streets_graph = ox.graph_from_place('Burlington, Vermont',
+                                        network_type ='drive',
+                                        simplify = True,
+                                        retain_all = False,
+                                        truncate_by_edge = False,
+                                        which_result = None,
+                                        buffer_dist = 10000,
+                                        clean_periphery = True,
+                                        custom_filter = None)
 
+    streets_graph = ox.projection.project_graph(streets_graph)
 
-"""
-The road classification in this data set is horrible, so there will be 
-two different edge types, edges where there are assumed two lanes for 
-each direction of traffic, and one lane. below are the encoded values
-for edges that most likely do not contain two lanes for each direction 
-of traffic
-"""
+    streets = ox.graph_to_gdfs(ox.get_undirected(streets_graph),
+                            nodes=False,
+                            edges=True,
+                            node_geometry=False,
+                            fill_edge_geometry=True)
 
-not_two_lane_classes = [70, 80, 81, 82, 83, 86, 87, 88, 92, 96, 97, 98, 99,
-                        1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16]
-net = gen_net("VT_Road_Centerline.geojson",  ["StartNodeID", "EndNodeID", 
-                                             "AOTCLASS"], 
-            "edge_complex_list.csv", not_two_lane_classes)
-print(net.edges(data=True))
+    streets["lanes"] = streets["lanes"].fillna(1)
+    return streets 
+
