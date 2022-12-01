@@ -77,5 +77,5 @@ def gen_net(data: geopandas.geodataframe.GeoDataFrame, node_vals: list) -> nx.Gr
     nx.set_node_attributes(G, values=[], name="Queue")
     for node in G.nodes:
         G.nodes[node]["Queue"] = []
-    
+
     return G
