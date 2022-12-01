@@ -6,7 +6,7 @@ import networkx as nx
 import os
 import seaborn as sns
 
-def gen_net(file_name: str, node_vals, out_file_name) -> nx.Graph:
+def gen_net(file_name: str, node_vals: list, out_file_name: str) -> nx.Graph:
     """
     gen_net takes in a file and returns a network x network
     
@@ -18,6 +18,7 @@ def gen_net(file_name: str, node_vals, out_file_name) -> nx.Graph:
     Returns: 
     graph of given data
     """
+
     list_dir = os.listdir()
     list_diff = list(set([out_file_name])-set(list_dir))
     
@@ -44,6 +45,7 @@ def stats(network: nx.Graph) -> None:
     Returns:
     None
     """
+    
     print(network)
     degree_sequence = sorted([d for n, d in network.degree()], 
                             reverse=True)
