@@ -74,6 +74,8 @@ def gen_net(data: geopandas.geodataframe.GeoDataFrame, node_vals: list) -> nx.Gr
     data_node_ats = data[node_vals]
     G =nx.from_pandas_edgelist(data_node_ats, source=node_vals[0], target=node_vals[1],
                                 edge_attr=node_vals[2], create_using=nx.Graph())
-    nx.set_node_attributes(G, values={"queue": list()}, name="Queue")
+    nx.set_node_attributes(G, values=[], name="Queue")
+    for node in G.nodes:
+        G.nodes[node]["Queue"] = []
     
     return G
