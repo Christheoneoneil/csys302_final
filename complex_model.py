@@ -27,7 +27,7 @@ def generate_drivers(num_drivers: int, bad_driver_prop: float, states: list) -> 
         return drivers
 
 
-def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: int) -> float:
+def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: int, prob_wrong_turn: float) -> int:
         """
         run_model runs a model with the given generated drivers
 
@@ -36,6 +36,8 @@ def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: in
         network: networkx graph object
         origin_node: node point of origin 
         end_node: node point of sink
+        prob_wrong_turn: probablity that bad driver makes a random turn
+        at a given node
 
         Returns:
         number of iterations required for all drivers to get to final
@@ -43,21 +45,15 @@ def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: in
         """
 
 
-        network.nodes[origin_node]["Queue"] +=  drivers
+        network.nodes[origin_node]["Queue"] += drivers
         good_driver_path = nx.shortest_path(network, source=origin_node, target=end_node, method='dijkstra', weight="length")
         init_drivers = [list(driver.keys())[0] for driver in network.nodes[origin_node]["Queue"]]
         end_drivers = []
         active_nodes = {origin_node}
         iterations = 0
 
-        """
-        The reason that this while loop is set up like this is there is a lot of
-        mutation going on within this while loop, so to not cause issues with memory
-        a flag was not created to just stop popping off end_drivers node, so once the last
-        driver is in the end_drivers queue the loop ends and we return a count
-        """
-        while len(end_drivers) == 0 or sorted(init_drivers)[-1] != sorted(end_drivers)[-1]:
-                iterations += 1
+        while len(end_drivers) == 0 or sorted(init_drivers) != sorted(end_drivers):
+                iterations+=1
                 # Keep this as deepcopy or for loop behavior changes
                 for node in copy.deepcopy(active_nodes):
                         if node != end_node:
@@ -70,19 +66,31 @@ def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: in
                                                 current_node_ind = good_driver_path.index(node)
                                                 next_step = good_driver_path[current_node_ind + 1]
                                                 network.nodes[next_step]["Queue"].append(first_out)
+                                                active_nodes.add(next_step)
                                         else:
-                                                pass
+                                                # at each step cause a bad driver to make a wrong turn with given prob.
+                                                turn_choice = random.choices(["on_path", "off_path"], 
+                                                                             [1-prob_wrong_turn, prob_wrong_turn])[0]
+                                                if turn_choice == "off_path":
+                                                        next_step = random.choice([n for n in network.neighbors(node)])
+                                                else: 
+                                                        bad_driver_path = nx.shortest_path(network, source=node, target=end_node, method='dijkstra', weight="length")
+                                                        current_node_ind = bad_driver_path.index(node)
+                                                        next_step = bad_driver_path[current_node_ind+1]
+                                                network.nodes[next_step]["Queue"].append(first_out)
+                                                active_nodes.add(next_step)
                                 except IndexError:
                                         # Once all drivers are dequed remove node from active
                                         # nodes list
                                         active_nodes.remove(node)
+                                  
                 end_drivers = [list(driver.keys())[0] for driver in network.nodes[end_node]["Queue"]]
-                active_nodes.add(next_step)
-        
         return iterations
 
 
-driver_list = generate_drivers(1000, 0, ["good", "bad"])
+driver_list = generate_drivers(num_drivers=100, bad_driver_prop=0.5, states=["good", "bad"])
 net = gen_net(data=gen_data(), node_vals=["u", "v", "length"])
 # origin and end node were found by our jupyiter notebook
-print(run_model(drivers=driver_list, network=net, origin_node=204449959, end_node=204350837))
+mod = run_model(drivers=driver_list, network=net, origin_node=204449959, 
+                end_node=204350837, prob_wrong_turn=0.2)
+print(mod)
