@@ -41,8 +41,9 @@ def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: in
         init_drivers = [list(driver.keys())[0] for driver in network.nodes[origin_node]["Queue"]]
         end_drivers = []
         active_nodes = [origin_node]
-        
+        iterations = 0
         while set(init_drivers) != end_drivers:
+                iterations+=1
                 try:       
                         for node in active_nodes.copy():
                                 first_out = network.nodes[node]["Queue"].pop(0)
@@ -59,7 +60,7 @@ def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: in
                                 continue
                 except IndexError:
                         continue
-                
+        print(iterations)
 driver_list = generate_drivers(1000, 0, ["good", "bad"])
 net = gen_net(gen_data(), ["u", "v", "length"])
 run_model(driver_list, net, 204449959, 204350837)

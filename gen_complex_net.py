@@ -52,7 +52,7 @@ def gen_data()-> geopandas.geodataframe.GeoDataFrame:
         streets_graph = ox.speed.add_edge_travel_times(G = streets_graph,
                                                         precision = 2)
         
-        ox.io.save_graphml(streets_graph, filepath = "tv_20km_streets.graphml", 
+        ox.io.save_graphml(streets_graph, filepath = "btv_20km_streets.graphml", 
         encoding='utf-8')
     
     return ox.utils_graph.graph_to_gdfs(streets_graph)[1]
