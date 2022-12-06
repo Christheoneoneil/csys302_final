@@ -54,8 +54,8 @@ def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: in
 
         while len(end_drivers) == 0 or sorted(init_drivers) != sorted(end_drivers):
                 iterations+=1
-                # Keep this as deepcopy or for loop behavior changes
-                for node in copy.deepcopy(active_nodes):
+                # Keep this as copy or for loop behavior changes
+                for node in copy.copy(active_nodes):
                         if node != end_node:
                                 try:        
                                         drivers = network.nodes[node]["Queue"]
@@ -85,12 +85,16 @@ def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: in
                                         active_nodes.remove(node)
                                   
                 end_drivers = [list(driver.keys())[0] for driver in network.nodes[end_node]["Queue"]]
+
         return iterations
 
 
-driver_list = generate_drivers(num_drivers=100, bad_driver_prop=0.5, states=["good", "bad"])
-net = gen_net(data=gen_data(), node_vals=["u", "v", "length"])
+driver_list = generate_drivers(num_drivers=100, bad_driver_prop=.9, states=["good", "bad"])
+
 # origin and end node were found by our jupyiter notebook
-mod = run_model(drivers=driver_list, network=net, origin_node=204449959, 
+
+for i in range(5):
+        net = gen_net(data=gen_data(), node_vals=["u", "v", "length"])
+        mod = run_model(drivers=driver_list, network=net, origin_node=204449959, 
                 end_node=204350837, prob_wrong_turn=0.2)
-print(mod)
+        print(mod)
