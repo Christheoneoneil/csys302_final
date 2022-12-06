@@ -7,35 +7,51 @@ from gen_complex_net import gen_net
 from gen_complex_net import gen_data
 
 
+def gen_means(bad_p: list, wrong_p: list, num_iters: int) -> list:
+    """
+    Params:
+    bad_p = proportion of bad drivers
+    wrong_p = probability of taking a wrong turn
+    num_iters = number of runs
 
-def gen_means(bad_p, wrong_p, num_iters) -> list:
-
+    Retruns:
+    list of mean values calculated for each proportion
+    """
+    mean_list = []
     for bad, wrong in zip(bad_p, wrong_p):
         outcomes = []
-        mean_list = []
         for i in range(num_iters):
                 driver_list = generate_drivers(num_drivers=100, bad_driver_prop=bad, states=["good", "bad"])
                 net = gen_net(data=gen_data(), node_vals=["u", "v", "length"])
                 mod = run_model(drivers=driver_list, network=net, origin_node=204449959, 
                         end_node=204350837, prob_wrong_turn=wrong)
                 outcomes.append(mod)
-                print(bad, wrong, np.mean(outcomes))
+        print(bad, wrong, np.mean(outcomes))
         mean_list.append(np.mean(outcomes))
-    return(means)
+    return mean_list
 
 
-def gen_plot(bad_p, wrong_p, means_list) -> None: 
+def gen_plot(bad_p: list, wrong_p: list, means_list: list) -> None: 
+    """
+    Params:
+    bad_p = proportion of bad drivers
+    wrong_p = probability of taking a wrong turn
+    means_list = list of means
 
-    plt.scatter(bad_p, wrong_p, c=mean_list, cmap='viridis')
+    Retruns:
+    list of mean values calculated for each proportion
+    """
+
+    plt.scatter(bad_p, wrong_p, c=means_list, cmap='viridis')
     sns.despine()
     plt.title("Relationship of Probablities and Number of Iterations")
     plt.xlabel("Proportion of Bad Drivers")
     plt.ylabel("Probability of Taking Taking Bad Turn")
-    cbar = plt.colorbar()
-    cbar.set_label("Avg Iterations", rotation=270)
+    plt.colorbar().set_label("Avg Iterations", rotation=270)
     plt.savefig("runs_colormap")
 
-bad_props = np.arange(0, 1.1, 0.1)
-wrong_turns_props = np.arange(0, 1.1, 0.1)
-means = gen_means(bad_p=bad_props, wrong_p=wrong_turns_props, num_iters=1) 
-gen_plot(means, bad_p=bad_props, wrong_p=wrong_turns_props, means_list=means)
+bad_props = np.arange(0, 1.1, 0.5)
+wrong_turns_props = np.arange(0, 1.1, 0.5)
+
+means = gen_means(bad_p=[0.1, 0.1, 0.1], wrong_p=[0.3, 0.5, 0.7], num_iters=20) 
+gen_plot(bad_p=bad_props, wrong_p=wrong_turns_props, means_list=means)
