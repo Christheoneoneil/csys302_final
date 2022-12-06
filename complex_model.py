@@ -2,10 +2,6 @@ import random
 import copy
 import networkx as nx
 import numpy as np
-from gen_complex_net import gen_net
-from gen_complex_net import gen_data
-
-
 
 def generate_drivers(num_drivers: int, bad_driver_prop: float, states: list) -> list:
         
@@ -89,12 +85,7 @@ def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: in
         return iterations
 
 
-driver_list = generate_drivers(num_drivers=100, bad_driver_prop=.9, states=["good", "bad"])
+## TODO: Implement version of model that spawns drivers at random nodes throughoutt the graph
+# Have more interactions between drivers other then being stuck in a queue at each intersection##
 
 # origin and end node were found by our jupyiter notebook
-
-for i in range(5):
-        net = gen_net(data=gen_data(), node_vals=["u", "v", "length"])
-        mod = run_model(drivers=driver_list, network=net, origin_node=204449959, 
-                end_node=204350837, prob_wrong_turn=0.2)
-        print(mod)
