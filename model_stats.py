@@ -17,8 +17,9 @@ def gen_means(bad_p: list, wrong_p: list, num_iters: int) -> list:
     Retruns:
     list of mean values calculated for each proportion
     """
-    mean_list = []
+    
     for bad, wrong in zip(bad_p, wrong_p):
+        mean_list = []
         outcomes = []
         for i in range(num_iters):
                 driver_list = generate_drivers(num_drivers=100, bad_driver_prop=bad, states=["good", "bad"])
@@ -53,5 +54,5 @@ def gen_plot(bad_p: list, wrong_p: list, means_list: list) -> None:
 bad_props = np.arange(0, 1.1, 0.5)
 wrong_turns_props = np.arange(0, 1.1, 0.5)
 
-means = gen_means(bad_p=[0.1, 0.1, 0.1], wrong_p=[0.3, 0.5, 0.7], num_iters=20) 
+means = gen_means(bad_p=[0.5, 0.5, 0.5], wrong_p=[0.3, 0.5, 0.7], num_iters=20) 
 gen_plot(bad_p=bad_props, wrong_p=wrong_turns_props, means_list=means)
