@@ -51,8 +51,9 @@ def gen_plot(bad_p: list, wrong_p: list, means_list: list) -> None:
     plt.colorbar().set_label("Avg Iterations", rotation=270)
     plt.savefig("runs_colormap")
 
-bad_props = np.arange(0, 1.1, 0.5)
-wrong_turns_props = np.arange(0, 1.1, 0.5)
-
-means = gen_means(bad_p=[0.5, 0.5, 0.5], wrong_p=[0.3, 0.5, 0.7], num_iters=3) 
+bad_props = np.arange(0, 1.01, 0.01)
+wrong_turns_props = np.arange(0, 1.01, 0.01)
+print(bad_props)
+print(wrong_turns_props)
+means = gen_means(bad_p=bad_props, wrong_p=wrong_turns_props, num_iters=20) 
 gen_plot(bad_p=bad_props, wrong_p=wrong_turns_props, means_list=means)
