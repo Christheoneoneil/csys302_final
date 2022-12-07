@@ -140,6 +140,7 @@ def run_and_plot(num_drivers: int, scale: int, bad_prop: list, iteration_list: l
 	bad_df = pd.concat((bad_df, bad))
 	print('Iterations: {}'.format(total[-1]))
 	print('Proportion Bad: {}'.format(prop_bad))
+	print('Mean Iter. Good: {}'.format(good.mean(1)))
 	plt.plot(good,
 					 label='{:2f}% Bad'.format(prop_bad*100),
 					 alpha=0.2,
