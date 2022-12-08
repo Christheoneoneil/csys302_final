@@ -10,12 +10,10 @@ from gen_complex_net import gen_data
 def generate_drivers(num_drivers: int, bad_driver_prop: float, states: list) -> list:
 	"""
 	generate drivers generates an array of randomly chosen good and bad drivers
-
 	Params:
 	num_drivers: total number of drivers
 	bad_driver_prop: proportion of bad drivers on the network
 	states: state of drivers
-
 	Returns:
 	list of drivers and their state
 	"""
@@ -27,7 +25,6 @@ def generate_drivers(num_drivers: int, bad_driver_prop: float, states: list) -> 
 def run_model(drivers: list, network: nx.Graph, origin_node: int, end_node: int, prob_wrong_turn: float):
 	"""
 	run_model runs a model with the given generated drivers
-
 	Params:
 	drivers: array of drivers of given attributes
 	network: networkx graph object
@@ -35,7 +32,6 @@ def run_model(drivers: list, network: nx.Graph, origin_node: int, end_node: int,
 	end_node: node point of sink
 	prob_wrong_turn: probablity that bad driver makes a random turn
 	at a given node
-
 	Returns:
 	number of iterations required for all drivers to get to final
 	destination
@@ -118,7 +114,7 @@ def run_model(drivers: list, network: nx.Graph, origin_node: int, end_node: int,
 
 			if bad_complete != 0:
 				comp_bad[bad_complete] = iteration_check
-				
+
 			end_drivers = [list(driver.keys())[0] for driver in network.nodes[end_node]["Queue"]]
 
 	iteration_list = [list(driver.values())[0]['Iterations'] for driver in network.nodes[end_node]["Queue"]]
@@ -184,7 +180,6 @@ def run_and_plot(num_drivers: int,
 								 bad_df: pd.DataFrame):
 	"""
 	Run the model and plot the results.
-
 	Params:
 	num_drivers: int (total number of drivers)
 	scale: int (number of iterations to run the model)
@@ -192,7 +187,6 @@ def run_and_plot(num_drivers: int,
 	iteration_list: list (list of iterations)
 	good_df: pd.DataFrame (Good driver iterations)
 	bad_df: pd.DataFrame (Bad driver iterations)
-
 	Returns:
 	ax: matplotlib.axes.Axes (plot of this proportions results)
 	bad_prop: list (proportion of bad drivers on the network)
