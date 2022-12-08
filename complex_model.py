@@ -126,21 +126,21 @@ def run_model(drivers: list, network: nx.Graph, origin_node: int, end_node: int,
 	return iteration_list, final_good, final_bad
 
 def run_and_plot(num_drivers: int, scale: int, bad_prop: list, iteration_list: list, good_df: pd.DataFrame, bad_df: pd.DataFrame):
-	prop_bad = scale * 0.01
+	prop_bad = scale * 0.1
 	driver_list = generate_drivers(num_drivers, prop_bad, states = ["good","bad"])
 	net = gen_net(edges=gen_data(), node_vals=["u", "v", "length"])
 	total, good, bad = run_model(drivers=driver_list,
-															 network=net,
-															 origin_node=204449959,
-															 end_node=204350837,
-															 prob_wrong_turn=0.01)
+															network=net,
+															origin_node=204449959,
+															end_node=204350837,
+															prob_wrong_turn=0.01)
 	bad_prop.append(prop_bad)
 	iteration_list.append(total)
 	good_df = pd.concat((good_df, good))
 	bad_df = pd.concat((bad_df, bad))
 	print('Iterations: {}'.format(total[-1]))
 	print('Proportion Bad: {}'.format(prop_bad))
-	print('Mean Iter. Good: {}'.format(good.mean(1)))
+	print('Mean Iter. Good: {}'.format(good.mean(0)[0]))
 	plt.plot(good,
 					 label='{:2f}% Bad'.format(prop_bad*100),
 					 alpha=0.2,
@@ -155,8 +155,8 @@ bad_prop = list()
 iteration_list = list()
 good_df = pd.DataFrame()
 bad_df = pd.DataFrame()
-num_drivers = 100
-sig_digits = 100
+num_drivers = 1000
+sig_digits = 10
 fig, ax = plt.subplots(1,1, figsize = (5.5, 5.5))
 
 for i in range(sig_digits):
