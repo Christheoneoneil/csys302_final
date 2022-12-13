@@ -10,7 +10,7 @@ Description: This branch (or sub-directory) contains the code used for my virtua
 
 **gen_simple_net.py:** Generate a simple version of the network.
 
-**gen_conplex_net.py:** Generate a complex version of the network.
+**gen_complex_net.py:** Generate a complex version of the network.
 
 **complex_model.py:** Set-up and run the complex version of the network.
 
