@@ -2,11 +2,11 @@
 
 ## **Directory:**
 
-**/harvey_workstation/** : This sub-directory contains the code used for Patrick Harvey's virtual environment.\\
+**MOCS_final_simple.ipynb** Interactive Python notebook to run model (Designed to execute in a Google Colaboratory Environment)
+
+**/harvey_workstation/** : This sub-directory contains the code used for Patrick Harvey's virtual environment.
 
   **harvey_ox.yml**  : Virtual environment used for .py files below.
-
-  **MOCS_final_simple.ipynb** Interactive Python notebook to run model (Designed to execute in a Google Colaboratory Environment).
 
   **gen_simple_net.py** Generate a simple version of the network.
 
