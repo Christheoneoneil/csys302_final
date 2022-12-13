@@ -1,6 +1,6 @@
 # csys302_final: Harvey Install
 
-This sub-directory contains the code used for Patrick Harvey's virtual environment.\\
+This sub-directory contains the code used for Patrick Harvey's virtual environment.
 
 
 ## **Files**
