@@ -19,7 +19,7 @@ def gen_data():
 	Params: 
 	None
 
-	Retuns:
+	Returns:
 	edges: geopandas.GeoDataFrame
 	Numeric representation of road network.
 	"""
@@ -72,7 +72,7 @@ def gen_net(edges, node_vals: list) -> nx.Graph:
 			Node IDs and edge attributes.
 
 	Returns:
-	G: netowrkx.Graph
+	G: networkx.Graph
 		NetworkX Graph object of road network.
 		Includes node attribute for Traffic as "Queue".
 	"""
