@@ -7,8 +7,6 @@ This sub-directory contains the code used for Patrick Harvey's virtual environme
 
 **harvey_ox.yml:** Virtual environment used for .py files below.
 
-**MOCS_final_simple.ipynb:** Interactive Python notebook to run model (Designed to execute in a Google Colaboratory Environment).
-
 **gen_simple_net.py:** Generate a simple version of the network.
 
 **gen_complex_net.py:** Generate a complex version of the network.
