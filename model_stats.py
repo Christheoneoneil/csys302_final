@@ -53,7 +53,6 @@ def gen_plot(bad_p: list, wrong_p: list, means_list: list) -> None:
 
 bad_props = np.arange(0, 1.01, 0.01)
 wrong_turns_props = np.arange(0, 1.01, 0.01)
-print(bad_props)
-print(wrong_turns_props)
+
 means = gen_means(bad_p=bad_props, wrong_p=wrong_turns_props, num_iters=20) 
 gen_plot(bad_p=bad_props, wrong_p=wrong_turns_props, means_list=means)
