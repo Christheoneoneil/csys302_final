@@ -85,7 +85,4 @@ def run_model(drivers: list, network: nx.Graph(), origin_node: int, end_node: in
         return iterations
 
 
-## TODO: Implement version of model that spawns drivers at random nodes throughoutt the graph
-# Have more interactions between drivers other then being stuck in a queue at each intersection##
 
-# origin and end node were found by our jupyiter notebook
