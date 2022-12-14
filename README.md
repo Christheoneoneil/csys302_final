@@ -19,3 +19,11 @@
 ## **Disclaimer**
 
 This work is provided as is, and is not guaranteed to work on another workstation without a fresh install of the necessary dependencies in an isolated virtual environment. An environment named 'ox' was used for the branch harvey_workstation is included as harvey_ox.yml.
+
+complex_model.py: creates traffic model with fixed starting and ending nodes
+
+model_stats.py: computes simple stats for model
+
+gen_complex_net.py: generates complex networkx object used in modeling 
+
+gen_total_net.py: generates network of all of Vermont's road ways 
