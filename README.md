@@ -16,6 +16,7 @@
 
 **burlington_traffic.py** Run all necessary scripts to model traffic within 20km of Burlington, VT.
 
+**/** : Main directory exclusive files:
 **MOCS_final_rand_init.ipynb** Interactive python notebook for attempt 2.
 
 **MOCS_final_simple.ipynb** Interactive python notebook for attempt 1.
