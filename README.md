@@ -2,7 +2,16 @@
 
 ## **Directory:**
 
-**MOCS_final_simple.ipynb** Interactive Python notebook to run model (Designed to execute in a Google Colaboratory Environment)
+**/** : Main directory includes the files below, including alternate versions of the files in the sub-directory:
+**MOCS_final_rand_init.ipynb** Interactive python notebook for attempt 2.
+
+**MOCS_final_simple.ipynb** Interactive python notebook for attempt 1.
+
+**gen_total_net.py** Generate the network for all Vermont roads.
+
+**model_stats.py** Calculate statistics.
+
+**plotting.ipynb** Generate plots from MOCS_final_rand_init.ipynb
 
 **/harvey_workstation/** : This sub-directory contains the code used for Patrick Harvey's virtual environment, including separate copies of the next five files:
 
@@ -15,17 +24,6 @@
 **complex_model.py** Set-up and run the complex version of the network.
 
 **burlington_traffic.py** Run all necessary scripts to model traffic within 20km of Burlington, VT.
-
-**/** : Main directory includes the files above, and the exclusive files below:
-**MOCS_final_rand_init.ipynb** Interactive python notebook for attempt 2.
-
-**MOCS_final_simple.ipynb** Interactive python notebook for attempt 1.
-
-**gen_total_net.py** Generate the network for all Vermont roads.
-
-**model_stats.py** Calculate statistics.
-
-**plotting.ipynb** Generate plots from MOCS_final_rand_init.ipynb
 
 ## **Disclaimer**
 
