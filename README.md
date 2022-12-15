@@ -3,6 +3,7 @@
 ## **Directory:**
 
 **/** : Main directory includes the files below, including alternate versions of the files in the sub-directory:
+
 **MOCS_final_rand_init.ipynb** Interactive python notebook for attempt 2.
 
 **MOCS_final_simple.ipynb** Interactive python notebook for attempt 1.
